@@ -1,0 +1,89 @@
+app-id: io.github.c0re100.qBittorrent_Enhanced_Edition
+runtime: org.kde.Platform
+sdk: org.kde.Sdk
+runtime-version: '6.9'
+command: qbittorrent
+rename-icon: qbittorrent
+copy-icon: true
+finish-args:
+  - --device=dri
+  - --filesystem=host
+  - --share=ipc
+  - --share=network
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --system-talk-name=org.freedesktop.login1
+  - --system-talk-name=org.freedesktop.UPower
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.freedesktop.PowerManagement
+  - --talk-name=org.gnome.SessionManager
+  - --talk-name=org.kde.StatusNotifierWatcher
+cleanup:
+  - /include
+  - /lib/*.a
+  - /lib/*.la
+  - /lib/cmake
+  - /lib/pkgconfig
+  - /share/cmake
+  - /share/man
+
+modules:
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh --prefix=/app
+      - ./b2 install --with-headers cxxflags="$CXXFLAGS" linkflags="$LDFLAGS" -j $FLATPAK_BUILDER_N_JOBS
+    sources:
+      - type: archive
+        url: https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.gz
+        sha256: 2575e74ffc3ef1cd0babac2c1ee8bdb5782a0ee672b1912da40e5b4b591ca01f
+
+  - name: libtorrent
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DBUILD_SHARED_LIBS=OFF
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DCMAKE_CXX_STANDARD=20
+      - -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON
+      - -Ddeprecated-functions=OFF
+    sources:
+      - type: git
+        url: https://github.com/arvidn/libtorrent.git  # branch RC_1_2
+        commit: 68ec0785cd069de47baf3ea9fed27f7c32f1c974
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/arvidn/libtorrent/branches/RC_1_2
+          commit-query: .commit.sha
+
+  - name: qBittorrent-Enhanced-Edition
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON
+    sources:
+      - type: archive
+        url: https://github.com/c0re100/qBittorrent-Enhanced-Edition/archive/refs/tags/release-5.0.5.10.tar.gz
+        sha256: 19c9d2d53966b7f07a2f6399ba2ed58f5e6e409b6ed0ff4ac9dbfe10f1ab0d1f
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/c0re100/qBittorrent-Enhanced-Edition/tags
+          version-query: map(.name | select(test("^release-[\\d\\.]+$"))) | first
+            | sub("^release-"; "")
+          url-query: '"https://github.com/c0re100/qBittorrent-Enhanced-Edition/archive/refs/tags/release-"
+            + $version + ".tar.gz"'
+    cleanup:
+      - /share/applications
+      - /share/metainfo
+    
+  - name: replace-desktop-and-metainfo
+    buildsystem: simple
+    build-commands:
+      - install -Dpm644 ${FLATPAK_ID}.desktop -t ${FLATPAK_DEST}/share/applications
+      - install -Dpm644 ${FLATPAK_ID}.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
+    sources:
+      - type: file
+        path: io.github.c0re100.qBittorrent_Enhanced_Edition.desktop
+      - type: file
+        path: io.github.c0re100.qBittorrent_Enhanced_Edition.metainfo.xml
