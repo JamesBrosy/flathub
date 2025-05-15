@@ -25,10 +25,34 @@ cleanup:
   - /include
   - /lib/pkgconfig
   - /share/man
+  - /share/doc
   - '*.la'
   - '*.a'
 
 modules:
+  - shared-modules/gtk2/gtk2.json
+  - shared-modules/glu/glu-9.json
+  - name: libxmu
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://www.x.org/archive/individual/lib/libXmu-1.1.4.tar.gz
+        sha256: 3091d711cdc1d8ea0f545a13b90d1464c3c3ab64778fd121f0d789b277a80289
+  - name: pangox-compat
+    buildsystem: simple
+    build-commands:
+      - bsdtar -O -xf libpangox*.deb data.* | bsdtar --no-same-owner -xf -
+      - mkdir -p ${FLATPAK_DEST}/lib
+      - mv usr/lib/*-linux-gnu/libpangox* ${FLATPAK_DEST}/lib
+    sources:
+      - type: file
+        only-arches: [x86_64]
+        url: http://ftp.us.debian.org/debian/pool/main/p/pangox-compat/libpangox-1.0-0_0.0.2-5+b2_amd64.deb
+        sha256: eb08c346530a6418774c82275074d1bca2aff34508859cb2f0ee705baeaf1b05
+      - type: file
+        only-arches: [aarch64]
+        url: http://ftp.us.debian.org/debian/pool/main/p/pangox-compat/libpangox-1.0-0_0.0.2-5+b2_arm64.deb
+        sha256: bf95c6381c46e6535f698522b0fe1f62e7f594934e3032e632a96218d69e07c6
   - name: libxcrypt
     buildsystem: autotools
     make-install-args:
