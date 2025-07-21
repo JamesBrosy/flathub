@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Exec=packettracer -uri=%u
+Name=Packet Tracer
+Icon=com.cisco.PacketTracer
+Terminal=false
+StartupNotify=true
+NoDisplay=true
+Categories=Application;Network;
+MimeType=x-scheme-handler/pttp;
+StartupWMClass=PacketTracer

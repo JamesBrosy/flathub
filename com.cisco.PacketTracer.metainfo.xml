@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.cisco.PacketTracer</id> 
+  <name>Cisco Packet Tracer</name>
+  <project_license>LicenseRef-proprietary=https://www.cisco.com/c/dam/en_us/about/doing_business/legal/seula/cisco-packet-tracer-software.pdf</project_license>
+  <developer id="com.cisco">
+    <name>Cisco Systems Inc</name>
+  </developer>
+  <summary>Powerful network simulation tool built by Cisco</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <launchable type="desktop-id">com.cisco.PacketTracer.desktop</launchable>
+  <url type="homepage">https://www.netacad.com</url>
+  <description>
+    <p>
+      Get real world experience with this powerful network simulation tool built by Cisco. Practice building simple and complex networks across a variety of devices and extend beyond routers and switches. Create solutions that are interconnected for smart cities, homes, and enterprises.
+    </p>
+    <p>
+      Use it alongside instructional courses, professional training, work planning or just to have some fun.
+    </p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.netacad.com/sfa-assets/images/png/lor_image_02.png</image>
+      <caption>Main Window</caption>
+    </screenshot>
+  </screenshots>
+  <categories>
+    <category>Network</category>
+  </categories>
+  <releases>
+    <release version="8.2.2" date="2024-04-01"></release>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>
