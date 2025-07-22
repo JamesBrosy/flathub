@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-pka">
+    <comment>Packet Tracer Activity file type</comment>
+    <glob pattern="*.pka"/>
+    <icon name="pka"/>
+  </mime-type>
+  <mime-type type="application/x-pks">
+    <comment>Packet Tracer Activity Sequence file type</comment>
+    <glob pattern="*.pks"/>
+    <icon name="pks"/>
+  </mime-type>
+  <mime-type type="application/x-pksz">
+    <comment>Packet Tracer Activity Sequence Package file type</comment>
+    <glob pattern="*.pksz"/>
+    <icon name="pksz"/>
+  </mime-type>
+  <mime-type type="application/x-pkt">
+    <comment>Packet Tracer Network file type</comment>
+    <glob pattern="*.pkt"/>
+    <icon name="pkt"/>
+  </mime-type>
+  <mime-type type="application/x-pkz">
+    <comment>Packet Tracer Compressed file type</comment>
+    <glob pattern="*.pkz"/>
+    <icon name="pkz"/>
+  </mime-type>
+</mime-info>
