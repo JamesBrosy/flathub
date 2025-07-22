@@ -3,6 +3,8 @@ runtime: org.kde.Platform
 runtime-version: '6.8'
 sdk: org.kde.Sdk
 command: packettracer
+rename-mime-file: com.cisco.PacketTracer-mime.xml
+rename-mime-icons: [ pka, pks, pkt, pkz, pksz ]
 separate-locales: false
 
 tags: 
@@ -31,7 +33,7 @@ modules:
       - install -Dpm644 -t ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps ${FLATPAK_ID}.png
       - install -Dpm644 -t ${FLATPAK_DEST}/share/metainfo ${FLATPAK_ID}.metainfo.xml
       - install -Dpm755 -t ${FLATPAK_DEST}/bin packettracer
-      - mv usr/share/mime ${FLATPAK_DEST}/share
+      - install -Dpm644 -t ${FLATPAK_DEST}/share/mime/packages ${FLATPAK_ID}-mime.xml
       - mv usr/share/icons/gnome/48x48 ${FLATPAK_DEST}/share/icons/hicolor
 
     sources:
@@ -51,3 +53,5 @@ modules:
         path: com.cisco.PacketTracer.url.desktop
       - type: file
         path: com.cisco.PacketTracer.png
+      - type: file
+        path: com.cisco.PacketTracer-mime.xml
