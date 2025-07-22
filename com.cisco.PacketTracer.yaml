@@ -32,7 +32,7 @@ modules:
       - install -Dpm644 -t ${FLATPAK_DEST}/share/metainfo ${FLATPAK_ID}.metainfo.xml
       - install -Dpm755 -t ${FLATPAK_DEST}/bin packettracer
       - mv usr/share/mime ${FLATPAK_DEST}/share
-      - mv usr/share/icons/gnome ${FLATPAK_DEST}/share/icons
+      - mv usr/share/icons/gnome/48x48 ${FLATPAK_DEST}/share/icons/hicolor
 
     sources:
       - type: file
