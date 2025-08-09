@@ -119,6 +119,7 @@ modules:
         commands:
           - cd /app/zwcad || exit 1
           - ./ZWCADRUN.sh
+            "$@"
         dest-filename: zwcadrun
       - type: script
         commands:
