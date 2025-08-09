@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.zwsoft.zwcad</id> 
+  <name>zwcad</name>
+  <project_license>LicenseRef-proprietary</project_license>
+  <developer id="com.zwsoft">
+    <name>ZWSoft</name>
+  </developer>
+  <summary>Fast, Powerful and Compatible 2D CAD</summary>
+  <metadata_license>CC-BY-SA-4.0</metadata_license>
+  <launchable type="desktop-id">com.zwsoft.zwcad.desktop</launchable>
+  <url type="homepage">https://www.zwsoft.cn/solution/linux</url>
+  <url type="help">https://help.zwsoft.com</url>
+  <description>
+    <p>ZWCAD is a powerful CAD solution for complex 2D drafting and advanced 3D navigation. Widely compatible with DWG and other major formats, it enables seamless collaboration across industries. With an intuitive interface, efficiency-boosting features, and AI-powered tools, ZWCAD helps architects, engineers, and designers bring their ideas to life without limits and confidently shape the future.</p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://cdn.zwsoft.cn/uploadfile/content/2025/06/685c9ff6ec96a.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.zwsoft.cn/uploadfile/content/2020/11/5fb7890fcafbf.jpg</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.zwsoft.cn/uploadfile/content/2020/11/5fb7890fa8352.jpg</image>
+    </screenshot>
+  </screenshots>
+  <categories>
+    <category>Graphics</category>
+    <category>Engineering</category>
+    <category>2DGraphics</category>
+  </categories>
+  <releases>
+    <release version="2026" date="2025-06-12"></release>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

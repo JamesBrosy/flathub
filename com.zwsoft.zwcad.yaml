@@ -1,0 +1,129 @@
+app-id: com.zwsoft.zwcad
+runtime: org.kde.Platform
+runtime-version: '5.15-24.08'
+sdk: org.kde.Sdk
+command: zwcadrun
+separate-locales: false
+rename-mime-icons: [ "dwf", "dwg", "dxf", "dwfx", "dwt", "zrx" ]
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=x11
+  - --device=dri
+modules:
+  - name: krb5
+    buildsystem: simple
+    only-arches:
+      - x86_64
+    build-commands:
+      - bsdtar -O -xf libgssapi-krb5*.deb data.* | bsdtar --no-same-owner -xf -
+      - install -dm755 ${FLATPAK_DEST}/lib
+      - mv usr/lib/*-linux-gnu/libgssapi_krb5.so* ${FLATPAK_DEST}/lib
+      - rm -rf usr
+      - bsdtar -O -xf libkrb5-*.deb data.* | bsdtar --no-same-owner -xf -
+      - mv usr/lib/*-linux-gnu/libkrb5.so* ${FLATPAK_DEST}/lib
+      - rm -rf usr
+      - bsdtar -O -xf libkrb5support*.deb data.* | bsdtar --no-same-owner -xf -
+      - mv usr/lib/*-linux-gnu/libkrb5support.so.* ${FLATPAK_DEST}/lib
+    sources:
+      - type: file
+        url: http://archive.ubuntu.com/ubuntu/pool/main/k/krb5/libgssapi-krb5-2_1.19.2-2_amd64.deb
+        sha256: 53b3c8d2599974e378416f3e837b6bf89db7e155a52aaa6761789242fa9098f6
+      - type: file
+        url: http://archive.ubuntu.com/ubuntu/pool/main/k/krb5/libkrb5-3_1.19.2-2_amd64.deb
+        sha256: e0f9cbd7d6e9fccd8559a82a48b1dadbd98889840710546c35067b0269f612ee
+      - type: file
+        url: http://archive.ubuntu.com/ubuntu/pool/main/k/krb5/libkrb5support0_1.19.2-2_amd64.deb
+        sha256: 4736410375e20692050b7b587113e72d23bb04a6d9beea89282bc9a002629056
+  - name: libglu
+    buildsystem: simple
+    only-arches:
+      - x86_64
+    build-commands:
+      - bsdtar -O -xf libglu*.deb data.* | bsdtar --no-same-owner -xf -
+      - mv usr/lib/*-linux-gnu/libGLU.so* ${FLATPAK_DEST}/lib
+    sources:
+      - type: file
+        url: http://archive.ubuntu.com/ubuntu/pool/main/libg/libglu/libglu1-mesa_9.0.2-1_amd64.deb
+        sha256: 13c5572cf73951cda094392f5a6cbde904b9e71106ebe261198fb7e8ceaff495
+  - name: libk5crypto
+    buildsystem: simple
+    only-arches:
+      - x86_64
+    build-commands:
+      - bsdtar -O -xf libk5crypto*.deb data.* | bsdtar --no-same-owner -xf -
+      - mv usr/lib/*-linux-gnu/libk5crypto.so* ${FLATPAK_DEST}/lib
+    sources:
+      - type: file
+        url: http://archive.ubuntu.com/ubuntu/pool/main/k/krb5/libk5crypto3_1.19.2-2_amd64.deb
+        sha256: 8419e78a643e9414c8c90605829fb492157eac87b87c0edc1cd900f285487385
+  - name: libkeyutils
+    buildsystem: simple
+    only-arches:
+      - x86_64
+    build-commands:
+      - bsdtar -O -xf libkeyutils*.deb data.* | bsdtar --no-same-owner -xf -
+      - mv lib/*-linux-gnu/libkeyutils.so* ${FLATPAK_DEST}/lib
+    sources:
+      - type: file
+        url: http://archive.ubuntu.com/ubuntu/pool/main/k/keyutils/libkeyutils1_1.6.1-2ubuntu3_amd64.deb
+        sha256: 940daf78ee0229549b4eabc92ffd79dd038ed96a44e2e912305a23540cf22a0a
+  - name: binutils
+    buildsystem: simple
+    only-arches:
+      - x86_64
+    build-commands:
+      - bsdtar -O -xf binutils-*-linux-gnu*.deb data.* | bsdtar --no-same-owner -xf -
+      - install -Dpm755 usr/bin/*-linux-gnu-nm ${FLATPAK_DEST}/bin/nm
+      - rm -rf usr
+      - bsdtar -O -xf libbinutils*.deb data.* | bsdtar --no-same-owner -xf -
+      - mv usr/lib/*-linux-gnu/libbfd*.so ${FLATPAK_DEST}/lib
+    sources:
+      - type: file
+        url: http://archive.ubuntu.com/ubuntu/pool/main/b/binutils/binutils-x86-64-linux-gnu_2.38-3ubuntu1_amd64.deb
+        sha256: 377418492b8f90a76245200fdede3a72f9e34149cb71028493ed0cb3e298f265
+      - type: file
+        url: http://archive.ubuntu.com/ubuntu/pool/main/b/binutils/libbinutils_2.38-3ubuntu1_amd64.deb
+        sha256: c21d6b82049c1d4e435264f03edae57dd9f200b571cd1170613deeb6649e75b9
+  - name: zwcad
+    buildsystem: simple
+    build-commands:
+      - bsdtar -O -xf zwcad.deb data.* | bsdtar --no-same-owner -xf -
+      - install -dm755 ${FLATPAK_DEST}/share
+      - mv opt/apps/${FLATPAK_ID}*/entries/* ${FLATPAK_DEST}/share
+      - mv ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}*.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
+      - mv ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}*.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - mv ${FLATPAK_DEST}/share/applications/com.zwsoft.zwlmgr*.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.zwlmgr.desktop
+      - sed -i '/^Version=/d' ${FLATPAK_DEST}/share/applications/com.zwsoft.*.desktop
+      - desktop-file-edit --set-key="Exec" --set-value="zwcadrun %F" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - desktop-file-edit --set-icon="${FLATPAK_ID}" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - desktop-file-edit --set-key="Exec" --set-value="zwlmgrrun" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.zwlmgr.desktop
+      - desktop-file-edit --set-icon="${FLATPAK_ID}" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.zwlmgr.desktop
+      - mv ${FLATPAK_DEST}/share/mime/packages/${FLATPAK_ID}*.xml ${FLATPAK_DEST}/share/mime/packages/${FLATPAK_ID}.xml
+      - mv opt/apps/${FLATPAK_ID}*/files ${FLATPAK_DEST}/zwcad
+      - rm -rf ${FLATPAK_DEST}/share/{autostart,plugins,services} ${FLATPAK_DEST}/zwcad/lib/{libxkbcommon-x11.so*,GL/libGL.so.*}
+      - |
+        for s in {16,32,48,96}; do
+          for type in {dwf,dwg,dxf,dwfx,dwt,zrx}; do
+            mv ${FLATPAK_DEST}/share/icons/hicolor/${s}x${s}/mimetypes/zwcad*_${type}.png ${FLATPAK_DEST}/share/icons/hicolor/${s}x${s}/mimetypes/${type}.png
+          done
+        done
+      - sed -E -i "s/zwcad(.*)_//g" ${FLATPAK_DEST}/share/mime/packages/${FLATPAK_ID}.xml
+      - install -Dpm644 -t ${FLATPAK_DEST}/share/metainfo com.zwsoft.zwcad.metainfo.xml
+      - install -Dpm755 -t ${FLATPAK_DEST}/bin zwcadrun
+      - install -Dpm755 -t ${FLATPAK_DEST}/bin zwlmgrrun
+    sources:
+      - type: file
+        path: com.zwsoft.zwcad.metainfo.xml
+      - type: script
+        commands:
+          - cd /app/zwcad || exit 1
+          - ./ZWCADRUN.sh
+        dest-filename: zwcadrun
+      - type: script
+        commands:
+          - cd /app/zwcad || exit 1
+          - ./ZWLMGRRUN.sh
+        dest-filename: zwlmgrrun
+      - type: file
+        path: zwcad.deb
