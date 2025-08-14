@@ -1,0 +1,85 @@
+app-id: com.serial_studio.Serial-Studio-Pro
+runtime: org.kde.Platform
+runtime-version: '6.9'
+sdk: org.kde.Sdk
+command: serial-studio-pro
+separate-locales: false
+rename-icon: serial-studio-pro
+rename-desktop-file: serial-studio-pro.desktop
+rename-appdata-file: serial-studio.metainfo.xml
+
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=pulseaudio
+  - --socket=x11
+  - --device=all
+  - --allow=bluetooth
+  - --system-talk-name=org.bluez
+  - --filesystem=xdg-documents
+modules:
+  - name: unappimage
+    buildsystem: simple
+    build-commands:
+      - make -C squashfs-tools install INSTALL_DIR=/app/bin
+    sources:
+      - type: git
+        url: https://github.com/refi64/unappimage
+        commit: d7f86f2a0d7ec3a69211125207d5f127386b849a
+  - name: serial-studio
+    buildsystem: simple
+    build-commands:
+      - install -Dpm755 -t ${FLATPAK_DEST}/bin apply_extra
+      - install -Dpm755 -t ${FLATPAK_DEST}/bin serial-studio-pro
+      - install -Dpm644 -t ${FLATPAK_DEST}/share/applications serial-studio-pro.desktop
+      - install -Dpm644 -t ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps serial-studio-pro.svg
+      - install -Dpm644 -t ${FLATPAK_DEST}/share/metainfo serial-studio.metainfo.xml
+    sources:
+      - type: extra-data
+        only-arches:
+          - x86_64
+        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.8/Serial-Studio-Pro-3.1.8-Linux-x64.AppImage
+        sha256: 31be761385993cf589046f3de70dc4c8e09ecef2ecf59d474140780d3cfe300c
+        size: 68916416
+        filename: serial-studio.appimage
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/Serial-Studio/Serial-Studio/releases/latest
+          tag-query: .tag_name
+          version-query: $tag | sub("^v"; "")
+          url-query: .assets[] | select(.name=="Serial-Studio-Pro-" + $version + "-Linux-x64.AppImage") | .browser_download_url
+          timestamp-query: .published_at
+      - type: extra-data
+        only-arches:
+          - aarch64
+        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.8/Serial-Studio-Pro-3.1.8-Linux-arm64.AppImage
+        sha256: 623ad4afb37fe7d4e5e50efb32c28f75e630696a16c555f5126d2aff548d1fea
+        size: 67842432
+        filename: serial-studio.appimage
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/Serial-Studio/Serial-Studio/releases/latest
+          tag-query: .tag_name
+          version-query: $tag | sub("^v"; "")
+          url-query: .assets[] | select(.name=="Serial-Studio-Pro-" + $version + "-Linux-arm64.AppImage") | .browser_download_url
+          timestamp-query: .published_at
+      - type: script
+        dest-filename: apply_extra
+        commands:
+          - chmod +x serial-studio.appimage && unappimage serial-studio.appimage >/dev/null
+          - mv squashfs-root/usr serial-studio-pro
+          - rm -rf squashfs-root serial-studio.appimage
+      - type: script
+        dest-filename: serial-studio-pro
+        commands:
+          - exec "/app/extra/serial-studio-pro/bin/serial-studio-pro"
+            "$@"
+      - type: file
+        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.8/app/deploy/linux/serial-studio.metainfo.xml
+        sha256: cb0cc37739db5ddb1f186d32511f46c4b3851e5d6b3811da373f7153f4af9bf0
+      - type: file
+        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.8/app/deploy/linux/serial-studio-pro.svg
+        sha256: 1a95465163e93d0f9e9a457e7317c10d65db93ab7507f2e2650367cba78cdefa
+      - type: file
+        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.8/app/deploy/linux/serial-studio-pro.desktop
+        sha256: 5800fd3ec24f0d10673877b3a09c66c90769a456bcbe377e966a40b171985167
