@@ -38,9 +38,9 @@ modules:
       - type: extra-data
         only-arches:
           - x86_64
-        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.8/Serial-Studio-Pro-3.1.8-Linux-x64.AppImage
-        sha256: 31be761385993cf589046f3de70dc4c8e09ecef2ecf59d474140780d3cfe300c
-        size: 68916416
+        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.9/Serial-Studio-Pro-3.1.9-Linux-x64.AppImage
+        sha256: 77fca8e2e36f70e863a887bed1f6d002b90aaec057a9f11595f08495f681e4f2
+        size: 68900032
         filename: serial-studio.appimage
         x-checker-data:
           type: json
@@ -52,9 +52,9 @@ modules:
       - type: extra-data
         only-arches:
           - aarch64
-        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.8/Serial-Studio-Pro-3.1.8-Linux-arm64.AppImage
-        sha256: 623ad4afb37fe7d4e5e50efb32c28f75e630696a16c555f5126d2aff548d1fea
-        size: 67842432
+        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.9/Serial-Studio-Pro-3.1.9-Linux-arm64.AppImage
+        sha256: 89f01ce3453ab11c156ecaf7322018911af5bfe9eac41549d9846b89665c6963
+        size: 67821952
         filename: serial-studio.appimage
         x-checker-data:
           type: json
