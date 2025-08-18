@@ -1,0 +1,63 @@
+app-id: is.folo.Folo
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: '24.08'
+command: run.sh
+separate-locales: false
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=x11
+  - --socket=pulseaudio
+  - --device=dri
+  - --talk-name=org.kde.StatusNotifierWatcher
+modules:
+  - name: unappimage
+    buildsystem: simple
+    build-commands:
+      - make -C squashfs-tools install INSTALL_DIR=/app/bin
+    sources:
+      - type: git
+        url: https://github.com/refi64/unappimage
+        commit: d7f86f2a0d7ec3a69211125207d5f127386b849a
+  - name: Folo
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 -t ${FLATPAK_DEST}/bin apply_extra
+      - install -Dm755 -t $FLATPAK_DEST/bin run.sh
+      - install -Dm644 -t ${FLATPAK_DEST}/share/applications ${FLATPAK_ID}.desktop
+      - install -Dm644 -t ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/ ${FLATPAK_ID}.png
+      - install -Dm644 -t $FLATPAK_DEST/share/metainfo ${FLATPAK_ID}.metainfo.xml
+    sources:
+      - type: extra-data
+        only-arches: [x86_64]
+        url: https://github.com/RSSNext/Folo/releases/download/v0.7.0/Folo-0.7.0-linux-x64.AppImage
+        sha256: 04e5f7f53df310247ba715568779bfa9047b6465320ad639dd0375d26cbf986d
+        filename: Folo.AppImage
+        size: 126134608
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/RSSNext/Folo/releases/latest
+          tag-query: .tag_name
+          version-query: $tag | sub("^v"; "")
+          url-query: .assets[] | select(.name=="Folo-" + $version + "-linux-x64.AppImage") | .browser_download_url
+          timestamp-query: .published_at
+      - type: script
+        dest-filename: run.sh
+        commands:
+          - exec zypak-wrapper /app/extra/Folo/Folo --no-sandbox --disable-setuid-sandbox
+            "$@"
+      - type: script
+        dest-filename: apply_extra
+        commands:
+          - chmod +x Folo.AppImage && unappimage Folo.AppImage >/dev/null
+          - mv squashfs-root Folo
+          - rm Folo.AppImage
+      - type: file
+        path: is.folo.Folo.desktop
+      - type: file
+        path: is.folo.Folo.png
+      - type: file
+        path: is.folo.Folo.metainfo.xml

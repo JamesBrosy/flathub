@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>is.folo.Folo</id>
+  <name>Folo</name>
+  <project_license>GPL-3.0</project_license>
+  <developer id="is.folo">
+  <name>RSSNext</name>
+  </developer>
+  <summary>Follow everything in one place</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <launchable type="desktop-id">is.folo.Folo.desktop</launchable>
+  <url type="homepage">https://folo.is</url>
+  <url type="help">https://github.com/RSSNext/Folo/discussions</url>
+  <description>
+    <p>As they say, your thoughts are what you read—and we’ve been consuming noisy feeds for too long! Folo organizes content into one timeline, keeping you updated on what matters, noise-free. Share lists, explore collections, and enjoy distraction-free browsing.</p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Customized Information Hub</caption>
+      <image>https://github.com/user-attachments/assets/11dc7d21-f5d8-4e41-9269-24fc352aa02b</image>
+    </screenshot>
+    <screenshot>
+      <caption>AI At Your Fingertips</caption>
+      <image>https://github.com/user-attachments/assets/37cf4f2f-4c5e-4775-86e8-2fa1a1b2ecf5</image>
+    </screenshot>
+    <screenshot>
+      <caption>Dynamic Content Support</caption>
+      <image>https://github.com/user-attachments/assets/d1379fd6-8767-476e-b0dc-d61753715e26</image>
+    </screenshot>
+    <screenshot>
+      <caption>$POWER An Ownership Economy</caption>
+      <image>https://github.com/user-attachments/assets/23bbcd63-45ca-40c8-83ef-96bd1100b701</image>
+    </screenshot>
+    <screenshot>
+      <caption>More Than Just An App</caption>
+      <image>https://github.com/user-attachments/assets/62004a04-eaea-4f5d-bfbf-4e68b6b90286</image>
+    </screenshot>
+  </screenshots>
+  <categories>
+    <category>Utility</category>
+    <category>Network</category>
+  </categories>
+  <releases>
+    <release version="0.6.1" date="2025-06-29">
+      <description></description>
+    </release>
+    <release version="0.5.0" date="2025-06-08">
+      <url>https://github.com/RSSNext/Folo/releases/latest</url>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1">
+  </content_rating>
+</component>

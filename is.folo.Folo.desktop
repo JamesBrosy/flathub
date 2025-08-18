@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Folo
+Exec=run.sh %U
+Terminal=false
+Type=Application
+Icon=is.folo.Folo
+StartupWMClass=Folo
+Comment=Follow everything in one place
+Categories=Utility;Network
+MimeType=x-scheme-handler/follow;x-scheme-handler/folo
