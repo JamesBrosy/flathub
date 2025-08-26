@@ -1,0 +1,56 @@
+id: cn.wps.Office
+runtime: org.freedesktop.Platform
+runtime-version: "24.08"
+sdk: org.freedesktop.Sdk
+rename-mime-icons: [ "doc", "dot", "wps", "wpt", "wpss", "wpso", "pot", "ppt", "dps", "dpt", "dpss", "dpso", "xls", "xlt", "et", "ett", "ets", "eto", "uot3", "uott3", "uos", "uos3", "uost3", "uop", "uop3", "uopt3" ]
+command: wps
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=x11
+  - --socket=pulseaudio
+  - --device=dri
+  - --filesystem=xdg-documents
+  - --filesystem=xdg-download
+  - --filesystem=xdg-desktop
+  - --filesystem=/run/media
+  - --filesystem=/media
+
+modules:
+  - name: wps
+    buildsystem: simple
+    build-commands:
+      - bsdtar -O -xf wps-office.deb data.* | bsdtar --no-same-owner -xf -
+      - mv opt/kingsoft ${FLATPAK_DEST}
+      - |
+        for type in {"et","wps","pdf","wpp"}; do
+          install -Dpm644 usr/share/applications/wps-office*-${type}.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.${type}.desktop
+          desktop-file-edit --set-icon="${FLATPAK_ID}.${type}main" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.${type}.desktop
+          desktop-file-edit --set-key="Categories" --set-value="Application;Office;" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.${type}.desktop
+        done
+        install -Dpm644 usr/share/applications/wps-office*-prometheus.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.prometheus.desktop
+        desktop-file-edit --set-icon="${FLATPAK_ID}.kprometheus" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.prometheus.desktop
+        desktop-file-edit --set-key="Categories" --set-value="Application;Office;" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.prometheus.desktop
+        sed -i "s/\/usr\/bin\///g" ${FLATPAK_DEST}/share/applications/*.desktop
+      - mv usr/share/fonts ${FLATPAK_DEST}/share
+      - |
+        for s in {16,20,24,32,40,48,64,96,128,256,512}; do
+          for icon in usr/share/icons/hicolor/${s}x${s}/apps/*; do
+            install -Dpm644 ${icon} ${FLATPAK_DEST}/share/icons/hicolor/${s}x${s}/apps/${FLATPAK_ID}.${icon##*-}
+          done
+          for icon in usr/share/icons/hicolor/${s}x${s}/mimetypes/*; do
+            install -Dpm644 ${icon} ${FLATPAK_DEST}/share/icons/hicolor/${s}x${s}/mimetypes/${icon##*-}
+          done
+        done
+      - install -Dpm644 usr/share/mime/packages/*.xml ${FLATPAK_DEST}/share/mime/packages/${FLATPAK_ID}.xml
+      - sed -i "s/wps-office-//g" ${FLATPAK_DEST}/share/mime/packages/${FLATPAK_ID}.xml
+      - mv usr/share/templates ${FLATPAK_DEST}/share
+      - mv usr/bin ${FLATPAK_DEST}
+      - sed -i "s/\/opt/\/app/g" ${FLATPAK_DEST}/bin/*
+    sources:
+      - type: file
+        path: cn.wps.Office.metainfo.xml
+      - type: file
+        only-arches: [x86_64]
+        path: wps-office.deb
+        sha256: d2c5569889ac7cbc2a331c17c62184fcbbd224c41e2f86f852ea654f9442a657

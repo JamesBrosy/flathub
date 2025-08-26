@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>cn.wps.Office</id>
+  <name>WPS Office</name>
+  <project_license>LicenseRef-proprietary=https://www.wps.cn/privacy/full_account</project_license>
+  <developer id="cn.wps">
+    <name>Kingsoft Office Software</name>
+  </developer>
+  <summary>WPS Office Suite</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <launchable type="desktop-id">cn.wps.Office.desktop</launchable>
+  <url type="homepage">https://linux.wps.cn</url>
+  <url type="help">https://helpdesk.wps.cn</url>
+  <description>
+    <p>WPS Office including Writer, Presentation
+    and Spreadsheets, is a powerful office suite, which is able to process
+    word file, produce wonderful slides, and analyze data as well. It is
+    deeply compatible with all of the latest Microsoft Office file formats.
+    It can easily open and read the documents created with Microsoft Office.</p>
+    <p>NOTE: This wrapper is not verified by, affiliated with, or
+    supported by Kingsoft Office Corporation</p>
+  </description>
+  <categories>
+    <category>Office</category>
+  </categories>
+  <releases>
+    <release version="12.1.2.22570" date="2025-08-14">
+      <url>https://linux.wps.cn/wpslinuxlog</url>
+    </release>
+  </releases>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main window</caption>
+      <image>https://ee.wpscdn.cn/wpscn/custom/image/index_bg2.png</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1"/>
+</component>
