@@ -31,7 +31,9 @@ modules:
         install -Dpm644 usr/share/applications/wps-office*-prometheus.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.prometheus.desktop
         desktop-file-edit --set-icon="${FLATPAK_ID}.kprometheus" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.prometheus.desktop
         desktop-file-edit --set-key="Categories" --set-value="Application;Office;" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.prometheus.desktop
-        sed -i "s/\/usr\/bin\///g" ${FLATPAK_DEST}/share/applications/*.desktop
+        for desk in ${FLATPAK_DEST}/share/applications/*.desktop; do
+          desktop-file-edit --set-key="Exec" --set-value="wps %F" "$desk"
+        done
       - mv usr/share/fonts ${FLATPAK_DEST}/share
       - |
         for s in {16,20,24,32,40,48,64,96,128,256,512}; do
