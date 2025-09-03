@@ -13,6 +13,7 @@ finish-args:
   - --socket=wayland
   - --socket=fallback-x11
   - --device=all
+  - --persist=.config
 cleanup:
   - /bin/airspy*
   - /bin/fftw*
