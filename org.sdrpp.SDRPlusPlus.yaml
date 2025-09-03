@@ -1,0 +1,134 @@
+app-id: org.sdrpp.SDRPlusPlus
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+command: sdrpp
+separate-locales: false
+rename-desktop-file: sdrpp.desktop
+rename-icon: sdrpp
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=pulseaudio
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=all
+cleanup:
+  - /bin/airspy*
+  - /bin/fftw*
+  - /bin/hackrf*
+  - /bin/iio*
+  - /bin/rtl*
+  - /bin/volk*
+  - /include
+  - /lib/cmake
+  - /lib/pkgconfig
+  - /lib/python*
+  - /sbin
+  - /share/doc
+  - /share/licenses
+  - /share/rtaudio
+modules:
+  - shared-modules/linux-audio/fftw3f.json
+  - shared-modules/libusb/libusb.json
+  - name: glfw
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_SHARED_LIBS=ON
+      - -DGLFW_BUILD_DOCS=OFF
+    sources:
+      - type: git
+        url: https://github.com/glfw/glfw.git
+        tag: "3.4"
+        commit: 7b6aead9fb88b3623e3b3725ebb42670cbe4c579
+  - name: volk
+    buildsystem: cmake-ninja
+    builddir: true
+    config-opts:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DENABLE_TESTING:BOOL=OFF
+      - -DCMAKE_INSTALL_LIBDIR=lib
+    sources:
+      - type: git
+        url: https://github.com/gnuradio/volk.git
+        tag: v3.1.2
+        commit: ab2ab82981d3a1eb054f694e5685373d41a04803
+  - name: airspy
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/airspy/airspyone_host.git
+        tag: v1.0.10
+        commit: 229d5a5045b890621cd9cc200a19b1541c6021ae
+  - name: airspyhf
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DINSTALL_UDEV_RULES=OFF
+    sources:
+      - type: git
+        url: https://github.com/airspy/airspyhf.git
+        tag: "1.6.8"
+        commit: 8891387edddcd185e2949e9814e9ef35f46f0722
+  - name: rtaudio
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/thestk/rtaudio.git
+        tag: "6.0.1"
+        commit: b4f04903312e0e0efffbe77655172e0f060dc085
+  - name: hackrf
+    buildsystem: cmake-ninja
+    subdir: host
+    sources:
+      - type: git
+        url: https://github.com/greatscottgadgets/hackrf.git
+        tag: v2024.02.1
+        commit: 18b485e3b6d2031c15a79ba89cdb42b5fa245f24
+  - name: libaio
+    no-autogen: true
+    make-install-args:
+      - prefix=${FLATPAK_DEST}
+    sources:
+      - type: archive
+        url: https://pagure.io/libaio/archive/libaio-0.3.113/libaio-libaio-0.3.113.tar.gz
+        sha256: 716c7059703247344eb066b54ecbc3ca2134f0103307192e6c2b7dab5f9528ab
+  - name: libiio
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DINSTALL_UDEV_RULE=OFF
+      - -DHAVE_DNS_SD=OFF
+    sources:
+      - type: git
+        url: https://github.com/analogdevicesinc/libiio.git
+        tag: "v0.26"
+        commit: a0eca0d2bf10326506fb762f0eec14255b27bef5
+  - name: libad9361
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/analogdevicesinc/libad9361-iio.git
+        commit: 2264074505ad4911155c815104292c6fbf98f62c
+  - name: librtlsdr
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DDETACH_KERNEL_DRIVER=ON
+    sources:
+      - type: git
+        url: https://github.com/steve-m/librtlsdr.git
+        commit: 619ac3186ea0ffc092615e1f59f7397e5e6f668c
+  - name: SDRPlusPlus
+    buildsystem: cmake-ninja
+    post-install:
+      - install -Dpm644 -t ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps      ${FLATPAK_DEST}/share/sdrpp/icons/sdrpp.png
+      - install -Dpm644 -t $FLATPAK_DEST/share/metainfo                          ${FLATPAK_ID}.metainfo.xml
+      - desktop-file-edit --set-icon="sdrpp"                                     ${FLATPAK_DEST}/share/applications/sdrpp.desktop
+      - desktop-file-edit --set-key="Exec" --set-value="sdrpp"                   ${FLATPAK_DEST}/share/applications/sdrpp.desktop
+      - desktop-file-edit --set-key="Categories" --set-value="Science;HamRadio;" ${FLATPAK_DEST}/share/applications/sdrpp.desktop
+    sources:
+      - type: git
+        url: https://github.com/AlexandreRouma/SDRPlusPlus.git
+        commit: 9feaf02673cb79b9c7370762ab6155dc280c552c
+      - type: patch
+        path: patches/core_cmakefile.patch
+      - type: file
+        path: org.sdrpp.SDRPlusPlus.metainfo.xml

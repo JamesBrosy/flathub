@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.sdrpp.SDRPlusPlus</id>
+  <name>SDR++</name>
+  <project_license>GPL-3.0-or-later</project_license>
+  <developer id="org.sdrpp">
+    <name>Alexandre Rouma</name>
+  </developer>
+  <summary>The bloat-free SDR software</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <launchable type="desktop-id">org.sdrpp.SDRPlusPlus.desktop</launchable>
+  <url type="homepage">https://www.sdrpp.org</url>
+  <url type="bugtracker">https://github.com/AlexandreRouma/SDRPlusPlus/issues</url>
+  <url type="help">https://github.com/AlexandreRouma/SDRPlusPlus/discussions</url>
+  <description>
+    <p>SDR++ is a cross-platform and open source SDR software with the aim of being bloat free and simple to use.</p>
+    <p>Features:</p>
+    <ul>
+      <li>Wide hardware support (both through SoapySDR and dedicated modules)</li>
+      <li>SIMD accelerated DSP</li>
+      <li>Full waterfall update when possible. Makes browsing signals easier and more pleasant</li>
+    </ul>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main window</caption>
+      <image>https://i.imgur.com/Ter2MQJ.png</image>
+    </screenshot>
+  </screenshots>
+  <provides>
+    <binary>sdrpp</binary>
+  </provides>
+  <categories>
+    <category>Science</category>
+    <category>HamRadio</category>
+  </categories>
+  <releases>
+    <release version="nightly" date="2022-11-22">
+      <url>https://github.com/reqable/reqable-app/releases/latest</url>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>
