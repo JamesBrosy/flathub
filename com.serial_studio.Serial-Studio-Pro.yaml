@@ -33,14 +33,15 @@ modules:
       - install -Dpm755 -t ${FLATPAK_DEST}/bin serial-studio-pro
       - install -Dpm644 -t ${FLATPAK_DEST}/share/applications serial-studio-pro.desktop
       - install -Dpm644 -t ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps serial-studio-pro.svg
+      - sed -i "s/com.serial_studio.Serial-Studio/com.serial_studio.Serial-Studio-Pro/g" serial-studio.metainfo.xml
       - install -Dpm644 -t ${FLATPAK_DEST}/share/metainfo serial-studio.metainfo.xml
     sources:
       - type: extra-data
         only-arches:
           - x86_64
-        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.9/Serial-Studio-Pro-3.1.9-Linux-x64.AppImage
-        sha256: 77fca8e2e36f70e863a887bed1f6d002b90aaec057a9f11595f08495f681e4f2
-        size: 68900032
+        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.10/Serial-Studio-Pro-3.1.10-Linux-x64.AppImage
+        sha256: 299f10dadeb3cb7a81f1c9646c3572bdffaf7a0dc52abe42573cabf9e3b77de9
+        size: 69039296
         filename: serial-studio.appimage
         x-checker-data:
           type: json
@@ -52,9 +53,9 @@ modules:
       - type: extra-data
         only-arches:
           - aarch64
-        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.9/Serial-Studio-Pro-3.1.9-Linux-arm64.AppImage
-        sha256: 89f01ce3453ab11c156ecaf7322018911af5bfe9eac41549d9846b89665c6963
-        size: 67821952
+        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.10/Serial-Studio-Pro-3.1.10-Linux-arm64.AppImage
+        sha256: baae2fbf3a55c857e8aaa1c78d09bc978e8a0c559ef4462f1c655f93e9ab6a44
+        size: 67948928
         filename: serial-studio.appimage
         x-checker-data:
           type: json
@@ -75,11 +76,11 @@ modules:
           - exec "/app/extra/serial-studio-pro/bin/serial-studio-pro"
             "$@"
       - type: file
-        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.8/app/deploy/linux/serial-studio.metainfo.xml
-        sha256: cb0cc37739db5ddb1f186d32511f46c4b3851e5d6b3811da373f7153f4af9bf0
+        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.10/app/deploy/linux/serial-studio.metainfo.xml
+        sha256: bc81611b13deab59dd708ddb1f631f705dac66389313e13d4ccfde088455c0a8
       - type: file
-        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.8/app/deploy/linux/serial-studio-pro.svg
+        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.10/app/deploy/linux/serial-studio-pro.svg
         sha256: 1a95465163e93d0f9e9a457e7317c10d65db93ab7507f2e2650367cba78cdefa
       - type: file
-        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.8/app/deploy/linux/serial-studio-pro.desktop
-        sha256: 5800fd3ec24f0d10673877b3a09c66c90769a456bcbe377e966a40b171985167
+        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.10/app/deploy/linux/serial-studio-pro.desktop
+        sha256: 2d5dcee1b5b6b693809dfa53660d44d9dec6f747caa2af28d80e04506595c490
