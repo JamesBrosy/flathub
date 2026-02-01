@@ -39,9 +39,9 @@ modules:
       - type: extra-data
         only-arches:
           - x86_64
-        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.10/Serial-Studio-Pro-3.1.10-Linux-x64.AppImage
-        sha256: 299f10dadeb3cb7a81f1c9646c3572bdffaf7a0dc52abe42573cabf9e3b77de9
-        size: 69039296
+        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.2.2/Serial-Studio-Pro-3.2.2-Linux-x64.AppImage
+        sha256: 0cbec9559b33a7fb8cf4c86a5b029cc968135f9ed93669a68760f3ad3683f752
+        size: 73082048
         filename: serial-studio.appimage
         x-checker-data:
           type: json
@@ -53,9 +53,9 @@ modules:
       - type: extra-data
         only-arches:
           - aarch64
-        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.1.10/Serial-Studio-Pro-3.1.10-Linux-arm64.AppImage
-        sha256: baae2fbf3a55c857e8aaa1c78d09bc978e8a0c559ef4462f1c655f93e9ab6a44
-        size: 67948928
+        url: https://github.com/Serial-Studio/Serial-Studio/releases/download/v3.2.2/Serial-Studio-Pro-3.2.2-Linux-arm64.AppImage
+        sha256: 7c84218a6c8ec445c71dc4ff070e660166cef84aecb64ce451d50d35f354cef6
+        size: 71819648
         filename: serial-studio.appimage
         x-checker-data:
           type: json
@@ -76,11 +76,11 @@ modules:
           - exec "/app/extra/serial-studio-pro/bin/serial-studio-pro"
             "$@"
       - type: file
-        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.10/app/deploy/linux/serial-studio.metainfo.xml
-        sha256: bc81611b13deab59dd708ddb1f631f705dac66389313e13d4ccfde088455c0a8
+        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.2.2/app/deploy/linux/serial-studio.metainfo.xml
+        sha256: 73bd79fa0a4f9d44d9fb514be3f494e1b8499dc06a52ded85aaaa545d5d97fc9
       - type: file
-        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.10/app/deploy/linux/serial-studio-pro.svg
+        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.2.2/app/deploy/linux/serial-studio-pro.svg
         sha256: 1a95465163e93d0f9e9a457e7317c10d65db93ab7507f2e2650367cba78cdefa
       - type: file
-        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.1.10/app/deploy/linux/serial-studio-pro.desktop
-        sha256: 2d5dcee1b5b6b693809dfa53660d44d9dec6f747caa2af28d80e04506595c490
+        url: https://raw.githubusercontent.com/Serial-Studio/Serial-Studio/refs/tags/v3.2.2/app/deploy/linux/serial-studio-pro.desktop
+        sha256: 65f36f90bebea66b3af94f717f9a7794ab609407a297b1de77634133ece10cb8
