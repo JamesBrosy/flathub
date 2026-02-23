@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.hiram_wong.zyfun</id>
+  <name>zyfun</name>
+  <project_license>AGPL-3.0</project_license>
+  <developer id="io.github.hiram_wong">
+    <name>Hiram-Wong</name>
+  </developer>
+  <summary>A cross-platform video player</summary>
+  <summary xml:lang="zh-Hans">跨平台桌面端视频资源播放器</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <launchable type="desktop-id">io.github.hiram_wong.zyfun.desktop</launchable>
+  <url type="homepage">https://github.com/Hiram-Wong/zyfun</url>
+  <url type="help">https://github.com/Hiram-Wong/zyfun/discussions</url>
+  <description>
+    <p>Zyfun is a free, minimalist, all-in-one cross-platform audio and video manager that manages all types of T1-T4 resources in one place, and has built-in multi-core players to switch at will. Exclusive boss key, one-click stealth and loaf on the job without worries. Discover the world through watching movies!</p>
+    <p xml:lang="zh-Hans">Zyfun是一款免费、极简、全能的跨平台影音管家，一站式管理 T1-T4 全类型资源，内置多核播放器随心切换。独家老板键，一键隐身摸鱼无忧。用观影发现世界！</p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image type="source">https://raw.githubusercontent.com/Hiram-Wong/zyfun/refs/tags/v3.4.2/docs/assets/images/app-film.png</image>
+      <caption>Film</caption>
+    </screenshot>
+    <screenshot>
+      <image type="source">https://raw.githubusercontent.com/Hiram-Wong/zyfun/refs/tags/v3.4.2/docs/assets/images/app-live.png</image>
+      <caption>Live</caption>
+    </screenshot>
+    <screenshot>
+      <image type="source">https://raw.githubusercontent.com/Hiram-Wong/zyfun/refs/tags/v3.4.2/docs/assets/images/app-history.png</image>
+      <caption>History</caption>
+    </screenshot>
+    <screenshot>
+      <image type="source">https://raw.githubusercontent.com/Hiram-Wong/zyfun/refs/tags/v3.4.2/docs/assets/images/app-play.png</image>
+      <caption>Play</caption>
+    </screenshot>
+  </screenshots>
+  <categories>
+    <category>Network</category>
+    <category>AudioVideo</category>
+    <category>Player</category>
+  </categories>
+  <releases>
+    <release version="v3.4.2" date="2026-02-15">
+      <description></description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

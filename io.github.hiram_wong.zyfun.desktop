@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=zyfun
+Exec=zyfun-start %U
+Terminal=false
+Type=Application
+Icon=io.github.hiram_wong.zyfun
+StartupWMClass=zyfun
+Comment=Discover the world by watching movies.
+MimeType=x-scheme-handler/zy;x-scheme-handler/zy;x-scheme-handler/zy;
+Categories=Video;AudioVideo;

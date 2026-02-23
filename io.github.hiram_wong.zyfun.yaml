@@ -1,0 +1,75 @@
+id: io.github.hiram_wong.zyfun
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+command: zyfun-start
+base: org.electronjs.Electron2.BaseApp
+base-version: '25.08'
+separate-locales: false
+
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --device=dri
+  - --persist=.zy
+
+modules:
+  - name: zyfun
+    buildsystem: simple
+    build-commands:
+      - install -Dpm755 apply_extra ${FLATPAK_DEST}/bin/apply_extra
+      - install -Dpm755 zyfun-start $FLATPAK_DEST/bin/zyfun-start
+      - install -Dpm644 ${FLATPAK_ID}.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
+      - install -Dpm644 ${FLATPAK_ID}.png -t ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps
+      - install -Dpm644 ${FLATPAK_ID}.desktop -t ${FLATPAK_DEST}/share/applications
+    sources:
+      - type: script
+        commands:
+          - bsdtar -O -xf zyfun.deb data.* | bsdtar --no-same-owner -xf -
+          - mv opt/zyfun .
+          - rm -rf zyfun.deb opt usr
+        dest-filename: apply_extra
+
+      - type: script
+        commands:
+          - exec zypak-wrapper /app/extra/zyfun/zyfun --ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime
+            "$@"
+        dest-filename: zyfun-start
+
+      - type: file
+        path: io.github.hiram_wong.zyfun.metainfo.xml
+
+      - type: file
+        path: io.github.hiram_wong.zyfun.png
+
+      - type: file
+        path: io.github.hiram_wong.zyfun.desktop
+
+      - type: extra-data
+        filename: zyfun.deb
+        only-arches: [x86_64]
+        url: https://github.com/Hiram-Wong/zyfun/releases/download/v3.4.2/zyfun-linux-3.4.2-amd64.deb
+        sha256: ef1224ada2f680092552425126fbd55c7ec31677a9a029a9aa0752e9a64e4ffb
+        size: 127380288
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/Hiram-Wong/zyfun/releases/latest
+          tag-query: .tag_name
+          version-query: $tag | sub("^v"; "")
+          url-query: .assets[] | select(.name=="zyfun-linux-" + $version + "amd64.deb") | .browser_download_url
+          timestamp-query: .published_at
+      - type: extra-data
+        filename: zyfun.deb
+        only-arches: [aarch64]
+        url: https://github.com/Hiram-Wong/zyfun/releases/download/v3.4.2/zyfun-linux-3.4.2-arm64.deb
+        sha256: 8bb9fa3fba166f5656e0f9a948ac628a4bf3428123263e9ccb5dd398b2f0c8e8
+        size: 121253832
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/Hiram-Wong/zyfun/releases/latest
+          tag-query: .tag_name
+          version-query: $tag | sub("^v"; "")
+          url-query: .assets[] | select(.name=="zyfun-linux-" + $version + "arm64.deb") | .browser_download_url
+          timestamp-query: .published_at
