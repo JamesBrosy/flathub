@@ -1,13 +1,13 @@
 app-id: com.cisco.PacketTracer
-runtime: org.kde.Platform
-runtime-version: '6.9'
-sdk: org.kde.Sdk
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
 command: packettracer
 rename-mime-file: com.cisco.PacketTracer-mime.xml
 rename-mime-icons: [ pka, pks, pkt, pkz, pksz ]
 separate-locales: false
 
-tags: 
+tags:
     - proprietary
 
 finish-args:
@@ -16,35 +16,43 @@ finish-args:
   - --socket=x11
   - --socket=pulseaudio
   - --device=dri
-  - --filesystem=xdg-download
   - --persist=.
 
 modules:
+  - name: unappimage
+    buildsystem: simple
+    build-options:
+      cflags: -Wno-incompatible-pointer-types
+    build-commands:
+      - make -C squashfs-tools install INSTALL_DIR=/app/bin
+    sources:
+      - type: git
+        url: https://github.com/refi64/unappimage
+        commit: d7f86f2a0d7ec3a69211125207d5f127386b849a
   - name: packettracer
     buildsystem: simple
     build-commands:
       - bsdtar -O -xf packettracer.deb data.* | bsdtar --no-same-owner -xf -
-      - find opt/pt/saves opt/pt/templates opt/pt/templates/environments -type d -exec chmod 755 {} +
-      - find opt/pt/saves opt/pt/templates opt/pt/templates/environments -type f -exec chmod 644 {} +
-      - mv opt/pt ${FLATPAK_DEST}
-      - sed -i -e 's\/opt/\/app/\g' ${FLATPAK_DEST}/pt/packettracer ${FLATPAK_DEST}/pt/linguist
+      - cd opt/pt && unappimage packettracer.AppImage >/dev/null && cd squashfs-root &&
+        find opt/pt/saves opt/pt/templates opt/pt/templates/environments -type d -exec chmod 755 {} + &&
+        find opt/pt/saves opt/pt/templates opt/pt/templates/environments -type f -exec chmod 644 {} + &&
+        mv opt/pt ${FLATPAK_DEST} &&
+        sed -i -e 's\/opt/\/app/\g' ${FLATPAK_DEST}/pt/packettracer ${FLATPAK_DEST}/pt/linguist &&
+        install -Dpm755 -t ${FLATPAK_DEST}/lib usr/lib/*
       - install -Dpm644 -t ${FLATPAK_DEST}/share/applications ${FLATPAK_ID}.desktop
       - install -Dpm644 -t ${FLATPAK_DEST}/share/applications ${FLATPAK_ID}.url.desktop
       - install -Dpm644 -t ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps ${FLATPAK_ID}.png
       - install -Dpm644 -t ${FLATPAK_DEST}/share/metainfo ${FLATPAK_ID}.metainfo.xml
       - install -Dpm755 -t ${FLATPAK_DEST}/bin packettracer
       - install -Dpm644 -t ${FLATPAK_DEST}/share/mime/packages ${FLATPAK_ID}-mime.xml
-      - mv usr/share/icons/gnome/48x48 ${FLATPAK_DEST}/share/icons/hicolor
+      - mv opt/pt/squashfs-root/usr/share/icons/gnome/48x48 ${FLATPAK_DEST}/share/icons/hicolor
 
     sources:
       - type: file
         path: packettracer.deb
-        sha256: 6cd2b8891df92d2cad8b6fdc47480fc089de085c4f3fe95eb80d5450a2a7f72d
-      - type: script
-        commands:
-          - exec /app/pt/packettracer
-            "$@"
-        dest-filename: packettracer
+        sha256: dd9ac0d4c7fc37dcb68f627fd7c7e6fa6d4200c14492526e5618b9bd172ed920
+      - type: file
+        path: packettracer
       - type: file
         path: com.cisco.PacketTracer.metainfo.xml
       - type: file

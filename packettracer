@@ -1,0 +1,41 @@
+#!/bin/bash
+
+ptdir="/app/pt"
+instdir=${XDG_DATA_HOME}
+instptdir="${instdir}/.packettracer"
+instptlibdir="${instptdir}/lib"
+
+# allows mapping of system libraries to a given dependency name
+resolve_pt_libs() {
+  mkdir -p "${instptlibdir}"
+  local libs=(
+    #       dependency lib |  system libs to check
+    #       ---------------|---------------------------
+    #        "libtiff.so.5"    "libtiff.so.5 libtiff.so.6"
+  )
+  for ((i = 0; i < ${#libs[@]}; i = i + 2)); do
+    local loc_lib="${instptlibdir}/${libs[$i]}"
+    test -e "${loc_lib}" && continue
+    echo Resolving dependency library: ${loc_lib}
+    local sys_libs=($(echo ${libs[$(($i + 1))]}))
+    for slib in "${sys_libs[@]}"; do
+      local sys_lib=$(find /usr -maxdepth 4 -name "${slib}*" | head -1)
+      if test -e "$sys_lib"; then
+        echo -e '\t'"==> "$sys_lib
+        cp -H "$sys_lib" "$loc_lib"
+        break
+      else
+        echo -e '\t'failed to resolve
+      fi
+    done
+  done
+}
+
+launch_pt() {
+  resolve_pt_libs
+  cd "${ptdir}/bin"
+  export LD_LIBRARY_PATH="${ptdir}/bin":"/app/lib":"${instptlibdir}"
+  exec ./PacketTracer "$@"
+}
+
+launch_pt "$@"
