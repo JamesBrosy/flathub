@@ -46,7 +46,7 @@
                 {
                     "type": "git",
                     "url": "https://github.com/wezterm/wezterm.git",
-                    "commit": "b6e75fd7c8f9c9ad5af4efbba1d28df0969f6b17"
+                    "commit": "05343b387085842b434d267f91b6b0ec157e4331"
                 },
                 {
                   "type": "file",
