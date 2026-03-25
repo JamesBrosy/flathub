@@ -1,10 +1,10 @@
 app-id: com.zwsoft.zwcad
-runtime: org.kde.Platform
-runtime-version: '5.15-24.08'
-sdk: org.kde.Sdk
+runtime: org.freedesktop.Platform
+runtime-version: "25.08"
+sdk: org.freedesktop.Sdk
 command: zwcadrun
 separate-locales: false
-rename-mime-icons: [ "dwf", "dwg", "dxf", "dwfx", "dwt", "zrx" ]
+rename-mime-icons: ["dwf", "dwg", "dxf", "dwfx", "dwt", "zrx"]
 finish-args:
   - --share=ipc
   - --share=network
