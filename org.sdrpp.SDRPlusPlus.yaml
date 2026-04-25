@@ -1,6 +1,6 @@
 app-id: org.sdrpp.SDRPlusPlus
 runtime: org.freedesktop.Platform
-runtime-version: '24.08'
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 command: sdrpp
 separate-locales: false
@@ -59,8 +59,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/airspy/airspyone_host.git
-        tag: v1.0.10
-        commit: 229d5a5045b890621cd9cc200a19b1541c6021ae
+        commit: c6721000f19601512e9ba6b0340e5d9ced22a900
   - name: airspyhf
     buildsystem: cmake-ninja
     config-opts:
@@ -68,8 +67,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/airspy/airspyhf.git
-        tag: "1.6.8"
-        commit: 8891387edddcd185e2949e9814e9ef35f46f0722
+        commit: 30e0422ab5eae0fecd429b29e89c6e8699bb5cd6
   - name: rtaudio
     buildsystem: cmake-ninja
     sources:
@@ -83,8 +81,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/greatscottgadgets/hackrf.git
-        tag: v2024.02.1
-        commit: 18b485e3b6d2031c15a79ba89cdb42b5fa245f24
+        tag: v2026.01.3
+        commit: 1cfe7dfe98d333450217d50e3f3a1ad0702e000f
   - name: libaio
     no-autogen: true
     make-install-args:
@@ -108,7 +106,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/analogdevicesinc/libad9361-iio.git
-        commit: 2264074505ad4911155c815104292c6fbf98f62c
+        commit: 216fe4c7bc7b8fdb3615456eca9f206842de7cd2
   - name: librtlsdr
     buildsystem: cmake-ninja
     config-opts:
@@ -128,7 +126,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/AlexandreRouma/SDRPlusPlus.git
-        commit: 9feaf02673cb79b9c7370762ab6155dc280c552c
+        commit: a6df4d58e5f6b3045883a70aeb8fb41fd5dbf1d9
       - type: patch
         path: patches/core_cmakefile.patch
       - type: file
