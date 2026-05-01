@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Application;Utility;
+Comment=A full-featured download manager
+Exec=motrix-next
+StartupWMClass=motrix-next
+Icon=io.github.AnInsomniacy.motrix-next
+Name=MotrixNext
+Terminal=false
+Type=Application
+MimeType=application/x-bittorrent;application/metalink+xml;x-scheme-handler/magnet;x-scheme-handler/thunder;x-scheme-handler/motrixnext

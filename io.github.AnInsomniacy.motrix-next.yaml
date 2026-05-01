@@ -1,0 +1,70 @@
+app-id: io.github.AnInsomniacy.motrix-next
+runtime: org.gnome.Platform
+runtime-version: "50"
+sdk: org.gnome.Sdk
+command: motrix-next
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.node22
+  - org.freedesktop.Sdk.Extension.rust-stable
+finish-args:
+  - --device=dri
+  - --share=ipc
+  - --share=network
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --filesystem=xdg-download
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --own-name=com.motrix.next.SingleInstance
+
+modules:
+  - shared-modules/libayatana-appindicator/libayatana-appindicator-gtk3.json
+  - name: motrix-next
+    buildsystem: simple
+    build-options:
+      append-path: /run/build/motrix-next/bin:/usr/lib/sdk/node22/bin:/usr/lib/sdk/rust-stable/bin
+      env:
+        XDG_CACHE_HOME: /run/build/motrix-next/flatpak-node/cache
+        npm_config_nodedir: /usr/lib/sdk/node22
+        npm_config_store_dir: /run/build/motrix-next/flatpak-node/pnpm-store
+        CARGO_HOME: /run/build/motrix-next/cargo
+    build-commands:
+      - mkdir bin && ln -s ../pnpm/bin/pnpm.cjs bin/pnpm
+      - pnpm --version
+      - pnpm install --frozen-lockfile --offline
+      - jq '.bundle.active = false' src-tauri/tauri.conf.json > tmp.json && mv
+        tmp.json src-tauri/tauri.conf.json
+      - pnpm tauri build
+      - install -Dm755 -t ${FLATPAK_DEST}/bin
+        src-tauri/target/release/motrix-next
+        src-tauri/target/release/motrixnext-aria2c
+      - install -Dm644 -t ${FLATPAK_DEST}/lib/MotrixNext/binaries
+        src-tauri/target/release/binaries/aria2.conf
+      - install -Dm644 -t ${FLATPAK_DEST}/lib/MotrixNext/data
+        src-tauri/target/release/data/dbip-country-lite.mmdb
+      - install -Dm644 -t ${FLATPAK_DEST}/share/applications
+        ${FLATPAK_ID}.desktop
+      - install -Dm644 -t ${FLATPAK_DEST}/share/metainfo
+        ${FLATPAK_ID}.metainfo.xml
+      - install -Dm644 src-tauri/icons/128x128.png
+        ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/${FLATPAK_ID}.png
+    sources:
+      - type: git
+        url: https://github.com/AnInsomniacy/motrix-next.git
+        tag: v3.8.5
+        commit: 92e6ac6034b8aff3727ba84732a1b0ada61af181
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/AnInsomniacy/motrix-next/releases/latest
+          tag-query: .tag_name
+          version-query: $tag | sub("^v"; "")
+          timestamp-query: .published_at
+      - node-generated-sources.json
+      - cargo-generated-sources.json
+      - type: archive
+        url: https://registry.npmjs.org/pnpm/-/pnpm-10.30.3.tgz
+        sha256: ff0a72140f6a6d66c0b284f6c9560aff605518e28c29aeac25fb262b74331588
+        dest: pnpm
+      - type: file
+        path: io.github.AnInsomniacy.motrix-next.desktop
+      - type: file
+        path: io.github.AnInsomniacy.motrix-next.metainfo.xml
