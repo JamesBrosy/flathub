@@ -1,0 +1,78 @@
+app-id: io.github.msojocs.bilibili-linux
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+base: org.electronjs.Electron2.BaseApp
+base-version: '25.08'
+command: bilibili
+separate-locales: false
+
+finish-args:
+  - --share=network
+  - --share=ipc
+  - --socket=x11
+  - --socket=pulseaudio
+  - --device=dri
+  - --filesystem=xdg-videos/bilibili:create
+  - --filesystem=xdg-download
+  - --talk-name=org.kde.StatusNotifierWatcher
+
+modules:
+  - name: bilibili
+    buildsystem: simple
+    build-commands:
+      - install -Dvm755 -t ${FLATPAK_DEST}/bin apply_extra
+      - install -Dvm755 bilibili.sh ${FLATPAK_DEST}/bin/bilibili
+      - install -Dvm644 -t ${FLATPAK_DEST}/share/applications
+        ${FLATPAK_ID}.desktop
+      - install -Dvm644 -t ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps
+        ${FLATPAK_ID}.svg
+      - install -Dvm644 -t ${FLATPAK_DEST}/share/metainfo
+        ${FLATPAK_ID}.metainfo.xml
+    sources:
+      - type: extra-data
+        only-arches:
+          - x86_64
+        url: https://github.com/msojocs/bilibili-linux/releases/download/v1.17.6-1/bilibili-v1.17.6-1-x64.tar.gz
+        sha256: f0b17b3d0e11d9ff6a12346660085e521d4af95e8c859425562d3e0ae8a1fc5f
+        size: 163341611
+        filename: bilibili.tar.gz
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/msojocs/bilibili-linux/releases/latest
+          tag-query: .tag_name
+          version-query: $tag | sub("^v"; "")
+          url-query: >-
+            .assets[] | select(.name=="bilibili-v" + $version + "-x64.tar.gz") |
+            .browser_download_url
+      - type: extra-data
+        only-arches:
+          - aarch64
+        url: https://github.com/msojocs/bilibili-linux/releases/download/v1.17.6-1/bilibili-v1.17.6-1-arm64.tar.gz
+        sha256: 980ade7d8802b519bc6c5d7f6e5fa930928fbd6d04ba5fbbd7aa2b6efeabf2da
+        size: 163315711
+        filename: bilibili.tar.gz
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/msojocs/bilibili-linux/releases/latest
+          tag-query: .tag_name
+          version-query: $tag | sub("^v"; "")
+          url-query: >-
+            .assets[] | select(.name=="bilibili-v" + $version + "-arm64.tar.gz")
+            | .browser_download_url
+      - type: file
+        path: io.github.msojocs.bilibili-linux.metainfo.xml
+      - type: file
+        path: io.github.msojocs.bilibili-linux.desktop
+      - type: file
+        path: io.github.msojocs.bilibili-linux.svg
+      - type: script
+        dest-filename: bilibili.sh
+        commands:
+          - exec zypak-wrapper /app/extra/bilibili/electron/electron
+            /app/extra/bilibili/app/app.asar $@
+      - type: script
+        dest-filename: apply_extra
+        commands:
+          - mkdir bilibili && tar xf bilibili.tar.gz -C bilibili
+          - rm bilibili.tar.gz
