@@ -29,6 +29,9 @@
     <category>Network</category>
   </categories>
   <releases>
+    <release version="2.3.78542" date="2026-08-27">
+      <description></description>
+    </release>
     <release version="2.3.13343" date="2026-03-11">
       <url>https://www.trae.cn/changelog</url>
     </release>

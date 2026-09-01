@@ -27,7 +27,8 @@ modules:
       - install -Dm755 -t ${FLATPAK_DEST}/bin/ apply_extra trae-cn
       - install -Dm644 -t ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/ ${FLATPAK_ID}.png
       - install -Dm644 ${FLATPAK_ID}.png ${FLATPAK_DEST}/share/icons/hicolor/128x128/mimetypes/${FLATPAK_ID}.code-workspace.png
-      - install -Dm644 -t ${FLATPAK_DEST}/share/applications/ ${FLATPAK_ID}.desktop ${FLATPAK_ID}.url-handler.desktop
+      - install -Dm644 -t ${FLATPAK_DEST}/share/applications/ ${FLATPAK_ID}.desktop
+        ${FLATPAK_ID}.url-handler.desktop
       - install -Dm644 -t ${FLATPAK_DEST}/share/metainfo/ ${FLATPAK_ID}.metainfo.xml
       - install -Dm644 -t ${FLATPAK_DEST}/share/mime/packages/ ${FLATPAK_ID}.xml
     sources:
@@ -44,24 +45,26 @@ modules:
       - type: extra-data
         only-arches: [x86_64]
         filename: trae.deb
-        url: https://lf-cdn.trae.com.cn/obj/trae-com-cn/pkg/app/releases/stable/2.3.13343/linux/Trae%20CN-linux-x64.deb
-        sha256: 7f42a2aad4bef92e2a697c9d8962cb7f8b4bf0aa0efe0c2bbb9b49b43558daea
-        size: 239105732
+        url: https://lf-cdn.trae.com.cn/obj/trae-com-cn/pkg/app/releases/stable/2.3.78542/linux/TraeCode_CN-linux-x64.deb
+        sha256: 1bae498863be7157a9a25406d0d5b9f6fbc7b8dd9c07b9d2c528c6b2861b1bc7
+        size: 388509180
         x-checker-data:
           type: json
           url: https://api.trae.ai/icube/api/v1/native/version/trae/cn/latest
-          version-query: .data.manifest.linux.version
+          version-query: .data.manifest.linux.download[] | select(.region=="sg") |
+            ."x64.deb" | match("[0-9]+\\.[0-9]+\\.[0-9]+").string
           url-query: .data.manifest.linux.download[] | select(.region=="cn") | ."x64.deb"
       - type: extra-data
         only-arches: [aarch64]
         filename: trae.deb
-        url: https://lf-cdn.trae.com.cn/obj/trae-com-cn/pkg/app/releases/stable/2.3.13343/linux/Trae%20CN-linux-arm64.deb
-        sha256: 052f7e05a8fa71a326c667e2c87cc3b099396d4474f4e0eef19a5aa3c28a7f5b
-        size: 223237144
+        url: https://lf-cdn.trae.com.cn/obj/trae-com-cn/pkg/app/releases/stable/2.3.78542/linux/TraeCode_CN-linux-arm64.deb
+        sha256: 75456e127f290094c862d5164b3357b11c7b05ff6e5c7b7ec7fdf4916b980a00
+        size: 365776672
         x-checker-data:
           type: json
           url: https://api.trae.ai/icube/api/v1/native/version/trae/cn/latest
-          version-query: .data.manifest.linux.version
+          version-query: .data.manifest.linux.download[] | select(.region=="sg") |
+            ."arm64.deb" | match("[0-9]+\\.[0-9]+\\.[0-9]+").string
           url-query: .data.manifest.linux.download[] | select(.region=="cn") | ."arm64.deb"
       - type: file
         path: cn.trae.Trae.desktop
