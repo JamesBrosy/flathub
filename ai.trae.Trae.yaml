@@ -45,24 +45,26 @@ modules:
       - type: extra-data
         only-arches: [x86_64]
         filename: trae.deb
-        url: https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.17433/linux/Trae-linux-x64.deb
-        sha256: 2b39d5b9a7ec5efa1c1e6117f2479541b7d3c08717358652a89f62994a448b3e
-        size: 262391800
+        url: https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.73738/linux/TraeCode-linux-x64.deb
+        sha256: bdd45584a471c7cf98d092c529681703b1585cb275a893633f429a8eea0094db
+        size: 372215348
         x-checker-data:
           type: json
           url: https://api.trae.ai/icube/api/v1/native/version/trae/latest
-          version-query: .data.manifest.linux.version
+          version-query: .data.manifest.linux.download[] | select(.region=="sg") |
+            ."x64.deb" | match("[0-9]+\\.[0-9]+\\.[0-9]+").string
           url-query: .data.manifest.linux.download[] | select(.region=="sg") | ."x64.deb"
       - type: extra-data
         only-arches: [aarch64]
         filename: trae.deb
-        url: https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.17433/linux/Trae-linux-arm64.deb
-        sha256: ec8799e0f12f910dd10bb11cd9b809f5a9884947d7c6da2bcd6eea741fa9dde1
-        size: 244512396
+        url: https://lf-cdn.trae.ai/obj/trae-ai-sg/pkg/app/releases/stable/2.3.73738/linux/TraeCode-linux-arm64.deb
+        sha256: 05b189bda4446fe346f0efb5359a910ef73a259e79dcad9b072619bac26021ea
+        size: 352002256
         x-checker-data:
           type: json
           url: https://api.trae.ai/icube/api/v1/native/version/trae/latest
-          version-query: .data.manifest.linux.version
+          version-query: .data.manifest.linux.download[] | select(.region=="sg") |
+            ."arm64.deb" | match("[0-9]+\\.[0-9]+\\.[0-9]+").string
           url-query: .data.manifest.linux.download[] | select(.region=="sg") | ."arm64.deb"
       - type: file
         path: ai.trae.Trae.desktop
